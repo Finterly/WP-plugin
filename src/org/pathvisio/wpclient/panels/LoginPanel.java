@@ -35,7 +35,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.xml.rpc.ServiceException;
 
-import org.pathvisio.core.debug.Logger;
+import org.pathvisio.libgpml.debug.Logger;
 import org.pathvisio.wpclient.WikiPathwaysClientPlugin;
 import org.pathvisio.wpclient.validators.Validator;
 

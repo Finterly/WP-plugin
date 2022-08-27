@@ -5,13 +5,13 @@ Bundle-SymbolicName: org.pathvisio.wpclient
 Bundle-Version: 1.1.4
 Bundle-Activator: org.pathvisio.wpclient.Activator
 Export-Package: org.pathvisio.wpclient
-Require-Bundle: org.pathvisio.core;bundle-version="3.2.0",
- org.pathvisio.desktop;bundle-version="3.2.0",
- org.pathvisio.gui;bundle-version="3.2.0",
- javax.xml.rpc;bundle-version="1.1.0",
- org.bridgedb;bundle-version="2.0.0",
- org.bridgedb.bio;bundle-version="2.0.0",
+Require-Bundle: org.pathvisio.libgpml;bundle-version="4.0.0",
+ org.pathvisio.core;bundle-version="4.0.0",
+ org.pathvisio.desktop;bundle-version="4.0.0",
+ org.pathvisio.gui;bundle-version="4.0.0",
+ javax.xml.rpc-api;bundle-version="1.1.4",
+ org.bridgedb;bundle-version="3.0.13",
+ org.bridgedb.bio;bundle-version="3.0.13",
  org.pathvisio.jgoodies.forms;bundle-version="1.2.0",
- org.wikipathways.webservice.api;bundle-version="3.2.3",
- org.bridgedb.webservice.bridgerest;bundle-version="2.0.0"
+ org.wikipathways.webservice.api;bundle-version="3.2.3"
 Import-Package: org.osgi.framework;version="1.3.0"

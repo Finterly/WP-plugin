@@ -44,7 +44,7 @@ import javax.swing.SwingWorker;
 import javax.xml.rpc.ServiceException;
 
 import org.bridgedb.bio.Organism;
-import org.pathvisio.core.debug.Logger;
+import org.pathvisio.libgpml.debug.Logger;
 import org.pathvisio.core.util.ProgressKeeper;
 import org.pathvisio.gui.ProgressDialog;
 import org.pathvisio.wikipathways.webservice.WSSearchResult;

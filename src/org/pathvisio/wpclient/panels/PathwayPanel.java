@@ -29,7 +29,7 @@ import javax.swing.JTable;
 import javax.xml.rpc.ServiceException;
 
 import org.bridgedb.Xref;
-import org.pathvisio.core.debug.Logger;
+import org.pathvisio.libgpml.debug.Logger;
 import org.pathvisio.wikipathways.webservice.WSSearchResult;
 import org.pathvisio.wpclient.WikiPathwaysClientPlugin;
 import org.pathvisio.wpclient.models.ResultTableModel;

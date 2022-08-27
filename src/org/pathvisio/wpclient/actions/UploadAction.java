@@ -21,7 +21,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
-import org.pathvisio.core.model.Pathway;
+import org.pathvisio.libgpml.model.PathwayModel;
 import org.pathvisio.wpclient.WikiPathwaysClientPlugin;
 import org.pathvisio.wpclient.panels.CreatePathwayPanel;
 
@@ -43,7 +43,7 @@ public class UploadAction extends AbstractAction {
 			JOptionPane.showMessageDialog(plugin.getDesktop().getFrame(), "Please specify organism by double clicking on info box\n in the top left corner of the pathway before uploading.",
 					"Error", JOptionPane.ERROR_MESSAGE);
 		} else {
-			if(!isEmpty(plugin.getDesktop().getSwingEngine().getEngine().getActivePathway())){
+			if(!isEmpty(plugin.getDesktop().getSwingEngine().getEngine().getActivePathwayModel())){
 				if(plugin.getPathwayID().equals("")) {
 					new CreatePathwayPanel(plugin);
 				} else {
@@ -59,11 +59,8 @@ public class UploadAction extends AbstractAction {
 		}
 	}
 	
-	private boolean isEmpty(Pathway p) {
-		if(p.getDataObjects().size() > 2) {
-			return false;
-		}
-		return true;
+	private boolean isEmpty(PathwayModel p) {
+		return p.getPathwayObjects().isEmpty();
 	}
 
 }

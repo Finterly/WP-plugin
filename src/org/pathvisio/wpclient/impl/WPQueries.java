@@ -16,6 +16,7 @@
 //
 package org.pathvisio.wpclient.impl;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -27,8 +28,8 @@ import java.util.Set;
 import org.bridgedb.DataSource;
 import org.bridgedb.Xref;
 import org.bridgedb.bio.Organism;
-import org.pathvisio.core.model.ConverterException;
-import org.pathvisio.core.model.Pathway;
+import org.pathvisio.libgpml.io.ConverterException;
+import org.pathvisio.libgpml.model.PathwayModel;
 import org.pathvisio.core.preferences.PreferenceManager;
 import org.pathvisio.core.util.ProgressKeeper;
 import org.pathvisio.wikipathways.webservice.WSCurationTag;
@@ -219,7 +220,7 @@ public class WPQueries implements IWPQueries {
 	 * upload a new pathway
 	 */
 	@Override
-	public WSPathwayInfo uploadPathway(Pathway pathway) throws RemoteException, FailedConnectionException, ConverterException {
+	public WSPathwayInfo uploadPathway(PathwayModel pathway) throws RemoteException, FailedConnectionException, ConverterException {
 		WikiPathwaysClient client = getClient();
 		return client.createPathway(pathway);
 	}
@@ -228,7 +229,7 @@ public class WPQueries implements IWPQueries {
 	 * update a pathway
 	 */
 	@Override
-	public void updatePathway(Pathway pathway, String id, Integer revision, String description) throws RemoteException, FailedConnectionException, ConverterException {
+	public void updatePathway(PathwayModel pathway, String id, Integer revision, String description) throws RemoteException, FailedConnectionException, ConverterException {
 		WikiPathwaysClient client = getClient();
 		client.updatePathway(id, pathway, description, revision);
 	}

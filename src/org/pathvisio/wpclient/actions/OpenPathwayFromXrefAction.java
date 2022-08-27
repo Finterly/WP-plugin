@@ -23,56 +23,71 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
 import org.bridgedb.Xref;
-import org.pathvisio.core.model.PathwayElement;
+import org.pathvisio.libgpml.model.DataNode;
+import org.pathvisio.libgpml.model.PathwayElement;
+import org.pathvisio.libgpml.model.type.DataNodeType;
+import org.pathvisio.libgpml.model.type.ObjectType;
 import org.pathvisio.wpclient.WikiPathwaysClientPlugin;
 
 /**
-* This class handles the GUI for the pathway to load 
-* Load Pathway into PathVisio on choosing option of "Open Pathway from WikiPathways"
-* from right click menu of pathway element (consedering the Xref of the selected element)
-* 	@author Sravanthi Sinha
-* 	@author mkutmon
-*/
+ * This class handles the GUI for the pathway to load Load Pathway into
+ * PathVisio on choosing option of "Open Pathway from WikiPathways" from right
+ * click menu of pathway element (considering the Xref of the selected element)
+ * 
+ * @author Sravanthi Sinha
+ * @author mkutmon
+ */
 public class OpenPathwayFromXrefAction extends AbstractAction {
 	private PathwayElement elm;
 	private WikiPathwaysClientPlugin plugin;
-	
+
 	public OpenPathwayFromXrefAction(WikiPathwaysClientPlugin plugin, PathwayElement elm) {
 		this.plugin = plugin;
 		this.elm = elm;
-		if(elm.getDataNodeType().equals("Pathway")) {
-			putValue(NAME, "Open Pathway from WikiPathways");
-		} else  {
-			putValue(NAME, "Find pathways containing " + elm.getXref());
+		// TODO assuming datanode
+		if (elm.getObjectType() == ObjectType.DATANODE) {
+			if (((DataNode) elm).getType() == DataNodeType.PATHWAY) {
+				putValue(NAME, "Open Pathway from WikiPathways");
+			} else {
+				putValue(NAME, "Find pathways containing " + ((DataNode) elm).getXref());
+			}
 		}
 	}
-	
+
 	public void actionPerformed(ActionEvent evt) {
-		Xref xref = elm.getXref();
-		if(xref.getDataSource() != null && xref.getId() != null) {
-			// pathway nodes - open pathway from wikipathways
-			if(elm.getDataNodeType().equals("Pathway")) {
-				try{
-					if(xref.getId().startsWith("WP")) {
-						File tmpDir= new File(plugin.getTmpDir(), xref.getDataSource().getSystemCode() + "_" + xref.getId());
+		if (elm.getObjectType() == ObjectType.DATANODE) {
+			Xref xref = ((DataNode) elm).getXref();
+			if (xref.getDataSource() != null && xref.getId() != null) {
+				// pathway nodes - open pathway from wikipathways
+				if (((DataNode) elm).getType() == DataNodeType.PATHWAY) {
+					try {
+						if (xref.getId().startsWith("WP")) {
+							File tmpDir = new File(plugin.getTmpDir(),
+									xref.getDataSource().getSystemCode() + "_" + xref.getId());
+							tmpDir.mkdirs();
+							plugin.openPathwayWithProgress(xref.getId(), 0, tmpDir);
+						}
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(plugin.getDesktop().getFrame(),
+								"Can not open pathway from WikiPathways.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					// other datanodes - search for pathways containing the same datanode
+				} else {
+					try {
+						File tmpDir = new File(plugin.getTmpDir(),
+								xref.getDataSource().getSystemCode() + "_" + xref.getId());
 						tmpDir.mkdirs();
-						plugin.openPathwayWithProgress(xref.getId(), 0, tmpDir);
-					} 
-				} catch(Exception ex) {
-					JOptionPane.showMessageDialog(plugin.getDesktop().getFrame(), "Can not open pathway from WikiPathways.", "Error", JOptionPane.ERROR_MESSAGE);
+						plugin.openPathwayXrefWithProgress(xref, 0, tmpDir);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(plugin.getDesktop().getFrame(),
+								"Can not open pathway from WikiPathways.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
 				}
-			// other datanodes - search for pathways containing the same datanode
 			} else {
-				try {
-					File tmpDir= new File(plugin.getTmpDir(), xref.getDataSource().getSystemCode() + "_" + xref.getId());
-					tmpDir.mkdirs();
-					plugin.openPathwayXrefWithProgress(xref, 0, tmpDir);
-				} catch(Exception e) {
-					JOptionPane.showMessageDialog(plugin.getDesktop().getFrame(), "Can not open pathway from WikiPathways.", "Error", JOptionPane.ERROR_MESSAGE);
-				}
+				JOptionPane.showMessageDialog(plugin.getDesktop().getFrame(),
+						"Error occured when searching for pathways.\nPlease check annotation of the selected element.",
+						"Error", JOptionPane.ERROR_MESSAGE);
 			}
-		} else {
-			JOptionPane.showMessageDialog(plugin.getDesktop().getFrame(), "Error occured when searching for pathways.\nPlease check annotation of the selected element.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

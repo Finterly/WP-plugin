@@ -23,8 +23,8 @@ import java.util.Set;
 import org.bridgedb.DataSource;
 import org.bridgedb.Xref;
 import org.bridgedb.bio.Organism;
-import org.pathvisio.core.model.ConverterException;
-import org.pathvisio.core.model.Pathway;
+import org.pathvisio.libgpml.io.ConverterException;
+import org.pathvisio.libgpml.model.PathwayModel;
 import org.pathvisio.core.util.ProgressKeeper;
 import org.pathvisio.wikipathways.webservice.WSCurationTag;
 import org.pathvisio.wikipathways.webservice.WSPathway;
@@ -63,9 +63,9 @@ public interface IWPQueries {
 
 	public void login(String username, String password) throws RemoteException, FailedConnectionException;
 
-	public WSPathwayInfo uploadPathway(Pathway pathway) throws RemoteException, FailedConnectionException, ConverterException;
+	public WSPathwayInfo uploadPathway(PathwayModel pathway) throws RemoteException, FailedConnectionException, ConverterException;
 
-	public void updatePathway(Pathway pathway, String id, Integer revision, String description) throws RemoteException, FailedConnectionException, ConverterException;
+	public void updatePathway(PathwayModel pathway, String id, Integer revision, String description) throws RemoteException, FailedConnectionException, ConverterException;
 
 	public void updateCurationTag(String tag, String id, String description, int revision) throws RemoteException, FailedConnectionException, ConverterException;
 	public WSPathwayInfo getPathwayInfo(String id, ProgressKeeper pk) throws RemoteException, FailedConnectionException, ConverterException;

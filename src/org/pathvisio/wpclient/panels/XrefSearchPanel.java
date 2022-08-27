@@ -47,7 +47,7 @@ import javax.xml.rpc.ServiceException;
 
 import org.bridgedb.DataSource;
 import org.bridgedb.Xref;
-import org.pathvisio.core.debug.Logger;
+import org.pathvisio.libgpml.debug.Logger;
 import org.pathvisio.core.util.ProgressKeeper;
 import org.pathvisio.gui.DataSourceModel;
 import org.pathvisio.gui.ProgressDialog;

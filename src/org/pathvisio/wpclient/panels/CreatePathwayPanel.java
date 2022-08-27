@@ -32,8 +32,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
-import org.pathvisio.core.debug.Logger;
-import org.pathvisio.core.model.Pathway;
+import org.pathvisio.libgpml.debug.Logger;
+import org.pathvisio.libgpml.model.PathwayModel;
 import org.pathvisio.core.util.ProgressKeeper;
 import org.pathvisio.gui.ProgressDialog;
 import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
@@ -139,9 +139,9 @@ public class CreatePathwayPanel extends JPanel implements ActionListener {
 			protected WSPathwayInfo doInBackground() throws Exception {
 				try {
 					pk.setTaskName("Uploading pathway.");
-					Pathway pathway = plugin.getDesktop().getSwingEngine().getEngine().getActivePathway();
+					PathwayModel pathway = plugin.getDesktop().getSwingEngine().getEngine().getActivePathwayModel();
 					if(!description.getText().equals("")) {
-						pathway.getMappInfo().addComment(description.getText(), "WikiPathways-description");
+						pathway.getPathway().setDescription(description.getText()); //TODO 
 					}
 					info = plugin.getWpQueries().uploadPathway(pathway);
 					pk.setTaskName("Adding curation tag.");
